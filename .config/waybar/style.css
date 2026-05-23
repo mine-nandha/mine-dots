@@ -59,14 +59,17 @@ button:hover {
 
 /* ── modules ────────────────────────────────────────────────────────── */
 #clock,
-#tray,
-#custom-cpu,
-#custom-memory,
-#custom-audio,
-#custom-network,
+#cpu,
+#memory,
+#wireplumber,
+#network,
 #custom-updates,
-#custom-battery,
-#custom-media {
+#battery,
+#mpris,
+#group-hardware,
+#idle_inhibitor,
+#custom-power-profile,
+#group-power {
   padding: 0 10px;
   margin: 0 2px;
   border-radius: 6px;
@@ -76,27 +79,27 @@ button:hover {
   color: #fab387;
 }
 
-#custom-cpu {
+#cpu {
   color: #89b4fa;
 }
 
-#custom-memory {
+#memory {
   color: #a6e3a1;
 }
 
-#custom-audio {
+#wireplumber {
   color: #cdd6f4;
 }
 
-#custom-audio.muted {
+#wireplumber.muted {
   color: #f38ba8;
 }
 
-#custom-network {
+#network {
   color: #94e2d5;
 }
 
-#custom-network.disconnected {
+#network.disconnected {
   color: #f38ba8;
 }
 
@@ -108,41 +111,81 @@ button:hover {
   color: #f9e2af;
 }
 
-#custom-battery {
+#battery {
   color: #a6e3a1;
 }
 
-#custom-battery.critical {
+#battery.critical {
   color: #f38ba8;
   background: rgba(243, 139, 168, 0.15);
 }
 
-#custom-battery.low {
+#battery.warning {
   color: #f9e2af;
 }
 
-#custom-battery.charging {
+#battery.charging {
   color: #94e2d5;
 }
 
-#custom-media {
+#mpris {
   color: #6c7086;
   min-width: 100px;
 }
 
-#custom-media.paused {
+#mpris.paused {
   color: #6c7086;
   font-style: italic;
 }
 
-#tray {
+#group-hardware {
   padding: 0 6px;
 }
 
-#tray > .passive { opacity: 0.6; }
-#tray > .needs-attention {
-  background: rgba(243, 139, 168, 0.2);
+#idle_inhibitor {
+  color: #585b70;
+}
+
+#idle_inhibitor.activated {
+  color: #f9e2af;
+}
+
+#custom-power-profile.performance {
+  color: #f38ba8;
+}
+
+#custom-power-profile.balanced {
+  color: #f9e2af;
+}
+
+#custom-power-profile.power-saver {
+  color: #a6e3a1;
+}
+
+#group-power {
+  padding: 0 6px;
+}
+
+#custom-power,
+#custom-lock,
+#custom-sleep,
+#custom-reboot,
+#custom-shutdown {
+  padding: 0 8px;
+  color: #cdd6f4;
+}
+
+#custom-power:hover,
+#custom-lock:hover,
+#custom-sleep:hover,
+#custom-reboot:hover,
+#custom-shutdown:hover {
+  background: rgba(205, 214, 244, 0.1);
   border-radius: 6px;
+}
+
+#custom-shutdown:hover {
+  color: #f38ba8;
 }
 
 /* ── tooltip ─────────────────────────────────────────────────────────── */
