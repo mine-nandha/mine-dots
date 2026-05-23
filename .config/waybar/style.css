@@ -1,0 +1,160 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: rgba(30, 30, 46, 0.85);
+  color: #cdd6f4;
+  transition: background-color 0.2s;
+}
+
+window#waybar.hidden { opacity: 0.2; }
+
+/* ── modules ────────────────────────────────────────────────────────── */
+.modules-left,
+.modules-center,
+.modules-right {
+  padding: 0 4px;
+}
+
+button {
+  box-shadow: none;
+  text-shadow: none;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+button:hover {
+  background: rgba(205, 214, 244, 0.08);
+  transition: background 0.15s;
+}
+
+/* ── workspaces ─────────────────────────────────────────────────────── */
+#workspaces {
+  margin: 0 4px;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  color: #585b70;
+  font-size: 12px;
+}
+
+#workspaces button.active {
+  color: #cdd6f4;
+  background: rgba(137, 180, 250, 0.15);
+  border-radius: 6px;
+}
+
+#workspaces button.urgent {
+  color: #f38ba8;
+  background: rgba(243, 139, 168, 0.15);
+  border-radius: 6px;
+}
+
+/* ── modules ────────────────────────────────────────────────────────── */
+#clock,
+#tray,
+#custom-cpu,
+#custom-memory,
+#custom-audio,
+#custom-network,
+#custom-updates,
+#custom-battery,
+#custom-media {
+  padding: 0 10px;
+  margin: 0 2px;
+  border-radius: 6px;
+}
+
+#clock {
+  color: #fab387;
+}
+
+#custom-cpu {
+  color: #89b4fa;
+}
+
+#custom-memory {
+  color: #a6e3a1;
+}
+
+#custom-audio {
+  color: #cdd6f4;
+}
+
+#custom-audio.muted {
+  color: #f38ba8;
+}
+
+#custom-network {
+  color: #94e2d5;
+}
+
+#custom-network.disconnected {
+  color: #f38ba8;
+}
+
+#custom-updates {
+  color: #cba6f7;
+}
+
+#custom-updates.has-updates {
+  color: #f9e2af;
+}
+
+#custom-battery {
+  color: #a6e3a1;
+}
+
+#custom-battery.critical {
+  color: #f38ba8;
+  background: rgba(243, 139, 168, 0.15);
+}
+
+#custom-battery.low {
+  color: #f9e2af;
+}
+
+#custom-battery.charging {
+  color: #94e2d5;
+}
+
+#custom-media {
+  color: #6c7086;
+  min-width: 100px;
+}
+
+#custom-media.paused {
+  color: #6c7086;
+  font-style: italic;
+}
+
+#tray {
+  padding: 0 6px;
+}
+
+#tray > .passive { opacity: 0.6; }
+#tray > .needs-attention {
+  background: rgba(243, 139, 168, 0.2);
+  border-radius: 6px;
+}
+
+/* ── tooltip ─────────────────────────────────────────────────────────── */
+tooltip {
+  background: rgba(30, 30, 46, 0.95);
+  border: 1px solid #45475a;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+tooltip label {
+  color: #cdd6f4;
+}
+
+

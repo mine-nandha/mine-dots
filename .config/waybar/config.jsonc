@@ -1,0 +1,93 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "margin-top": 6,
+  "margin-left": 6,
+  "margin-right": 6,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["custom/media"],
+  "modules-right": [
+    "custom/updates",
+    "custom/network",
+    "custom/audio",
+    "custom/battery",
+    "custom/cpu",
+    "custom/memory",
+    "clock",
+    "tray"
+  ],
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": false,
+    "format": "{icon}",
+    "on-click": "hyprctl dispatch workspace {id}",
+    "format-icons": {
+      "active": "●",
+      "urgent": "",
+      "default": "○"
+    }
+  },
+
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%a, %b %d}",
+    "interval": 30
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 6
+  },
+
+  "custom/media": {
+    "exec": "~/.config/waybar/scripts/custom_modules.sh media",
+    "return-type": "json",
+    "interval": 2,
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
+  },
+
+  "custom/updates": {
+    "exec": "~/.config/waybar/scripts/custom_modules.sh updates",
+    "return-type": "json",
+    "interval": 3600,
+    "on-click": "kitty -e sh -c 'checkupdates; read -p \"Press enter to close\"'"
+  },
+
+  "custom/network": {
+    "exec": "~/.config/waybar/scripts/custom_modules.sh network",
+    "return-type": "json",
+    "interval": 30,
+    "on-click": "kitty nmtui"
+  },
+
+  "custom/audio": {
+    "exec": "~/.config/waybar/scripts/custom_modules.sh audio",
+    "return-type": "json",
+    "interval": 1,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+  },
+
+  "custom/battery": {
+    "exec": "~/.config/waybar/scripts/custom_modules.sh battery",
+    "return-type": "json",
+    "interval": 30
+  },
+
+  "custom/cpu": {
+    "exec": "~/.config/waybar/scripts/custom_modules.sh cpu",
+    "return-type": "json",
+    "interval": 5
+  },
+
+  "custom/memory": {
+    "exec": "~/.config/waybar/scripts/custom_modules.sh memory",
+    "return-type": "json",
+    "interval": 10
+  }
+}
