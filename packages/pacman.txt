@@ -31,3 +31,4 @@ ttf-jetbrains-mono-nerd
 noto-fonts-emoji
 jq
 zed
+gnome-keyring
