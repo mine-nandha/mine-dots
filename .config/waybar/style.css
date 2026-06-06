@@ -1,3 +1,5 @@
+@import url("colors.css");
+
 * {
   border: none;
   border-radius: 0;
@@ -7,14 +9,13 @@
 }
 
 window#waybar {
-  background: rgba(30, 30, 46, 0.85);
-  color: #cdd6f4;
+  background: alpha(@background, 0.85);
+  color: @foreground;
   transition: background-color 0.2s;
 }
 
 window#waybar.hidden { opacity: 0.2; }
 
-/* ── modules ────────────────────────────────────────────────────────── */
 .modules-left,
 .modules-center,
 .modules-right {
@@ -30,34 +31,32 @@ button {
 }
 
 button:hover {
-  background: rgba(205, 214, 244, 0.08);
+  background: alpha(@foreground, 0.08);
   transition: background 0.15s;
 }
 
-/* ── workspaces ─────────────────────────────────────────────────────── */
 #workspaces {
   margin: 0 4px;
 }
 
 #workspaces button {
   padding: 0 8px;
-  color: #585b70;
+  color: @color8;
   font-size: 12px;
 }
 
 #workspaces button.active {
-  color: #cdd6f4;
-  background: rgba(137, 180, 250, 0.15);
+  color: @foreground;
+  background: alpha(@color4, 0.15);
   border-radius: 6px;
 }
 
 #workspaces button.urgent {
-  color: #f38ba8;
-  background: rgba(243, 139, 168, 0.15);
+  color: @color1;
+  background: alpha(@color1, 0.15);
   border-radius: 6px;
 }
 
-/* ── modules ────────────────────────────────────────────────────────── */
 #clock,
 #cpu,
 #memory,
@@ -80,52 +79,52 @@ button:hover {
 }
 
 #cpu {
-  color: #89b4fa;
+  color: @color4;
 }
 
 #memory {
-  color: #a6e3a1;
+  color: @color2;
 }
 
 #wireplumber {
-  color: #cdd6f4;
+  color: @foreground;
 }
 
 #wireplumber.muted {
-  color: #f38ba8;
+  color: @color1;
 }
 
 #network {
-  color: #94e2d5;
+  color: @color6;
 }
 
 #network.disconnected {
-  color: #f38ba8;
+  color: @color1;
 }
 
 #custom-updates {
-  color: #cba6f7;
+  color: @color5;
 }
 
 #custom-updates.has-updates {
-  color: #f9e2af;
+  color: @color3;
 }
 
 #battery {
-  color: #a6e3a1;
+  color: @color2;
 }
 
 #battery.critical {
-  color: #f38ba8;
-  background: rgba(243, 139, 168, 0.15);
+  color: @color1;
+  background: alpha(@color1, 0.15);
 }
 
 #battery.warning {
-  color: #f9e2af;
+  color: @color3;
 }
 
 #battery.charging {
-  color: #94e2d5;
+  color: @color6;
 }
 
 #mpris {
@@ -143,23 +142,23 @@ button:hover {
 }
 
 #idle_inhibitor {
-  color: #585b70;
+  color: @color8;
 }
 
 #idle_inhibitor.activated {
-  color: #f9e2af;
+  color: @color3;
 }
 
 #custom-power-profile.performance {
-  color: #f38ba8;
+  color: @color1;
 }
 
 #custom-power-profile.balanced {
-  color: #f9e2af;
+  color: @color3;
 }
 
 #custom-power-profile.power-saver {
-  color: #a6e3a1;
+  color: @color2;
 }
 
 #group-power {
@@ -172,7 +171,7 @@ button:hover {
 #custom-reboot,
 #custom-shutdown {
   padding: 0 8px;
-  color: #cdd6f4;
+  color: @foreground;
 }
 
 #custom-power:hover,
@@ -180,24 +179,21 @@ button:hover {
 #custom-sleep:hover,
 #custom-reboot:hover,
 #custom-shutdown:hover {
-  background: rgba(205, 214, 244, 0.1);
+  background: alpha(@foreground, 0.1);
   border-radius: 6px;
 }
 
 #custom-shutdown:hover {
-  color: #f38ba8;
+  color: @color1;
 }
 
-/* ── tooltip ─────────────────────────────────────────────────────────── */
 tooltip {
-  background: rgba(30, 30, 46, 0.95);
+  background: alpha(@background, 0.95);
   border: 1px solid #45475a;
   border-radius: 8px;
   padding: 8px 12px;
 }
 
 tooltip label {
-  color: #cdd6f4;
+  color: @foreground;
 }
-
-

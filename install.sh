@@ -35,6 +35,9 @@ DOTFILES_DIRS=(
   ".config/hypr"
   ".config/waybar"
   ".config/kitty"
+  ".config/dunst"
+  ".config/wal"
+  ".config/systemd/user"
 )
 
 # ── load packages from files ────────────────────────────────────────────
@@ -98,6 +101,35 @@ deploy_dots() {
   done
 }
 
+post_deploy() {
+  info "Running post-deploy setup..."
+
+  # Create default waybar colors.css if missing (will be replaced by wal after first wallpaper change)
+  local colors_css="$HOME/.config/waybar/colors.css"
+  if [ ! -f "$colors_css" ]; then
+    cat > "$colors_css" << 'EOF'
+@define-color background #1e1e2e;
+@define-color foreground #cdd6f4;
+@define-color color0 #313244;
+@define-color color1 #f38ba8;
+@define-color color2 #a6e3a1;
+@define-color color3 #f9e2af;
+@define-color color4 #89b4fa;
+@define-color color5 #cba6f7;
+@define-color color6 #94e2d5;
+@define-color color7 #bac2de;
+@define-color color8 #585b70;
+EOF
+    ok "Created default waybar colors.css"
+  fi
+
+  # Enable wallpaper rotation timer
+  run "systemctl --user daemon-reload 2>/dev/null"
+  run "systemctl --user enable --now wallpaper-rotation.timer 2>/dev/null" && ok "Wallpaper rotation timer enabled" || warn "Could not enable wallpaper timer"
+
+  ok "Post-deploy complete"
+}
+
 cmd_fresh() {
   echo ""
   echo "  ╔══════════════════════════╗"
@@ -110,14 +142,17 @@ cmd_fresh() {
   install_aur
   enable_services
   deploy_dots
+  post_deploy
   echo ""
   info "All done! Reboot or start Hyprland with: Hyprland"
   echo ""
   echo "  Post-install tips:"
-  echo "  - Lock screen:  Super + L"
-  echo "  - Blue light:   Super + O (toggle)"
-  echo "  - Clipboard:    Super + V"
-  echo "  - Waybar reload: pkill waybar && waybar &"
+  echo "  - Lock screen:      Super + L"
+  echo "  - Blue light:       Super + O (toggle)"
+  echo "  - Random wallpaper: Super + W"
+  echo "  - Wallpaper picker: Super + Shift + W"
+  echo "  - Clipboard:        Super + V"
+  echo "  - Notification fix: dunstctl set-paused false"
   echo ""
 }
 
@@ -137,6 +172,11 @@ cmd_sync() {
       rm -rf "$dest"
       mkdir -p "$(dirname "$dest")"
       cp -r "$src" "$(dirname "$dest")"
+
+      # Remove generated/symlinked files from the sync
+      [[ "$dir" == ".config/waybar" ]] && rm -f "$DOTDIR/.config/waybar/colors.css"
+      [[ "$dir" == ".config/wal" ]] && rm -rf "$DOTDIR/.config/wal/cache" 2>/dev/null
+
       info "Copied  $dir"
       count=$((count + 1))
     else

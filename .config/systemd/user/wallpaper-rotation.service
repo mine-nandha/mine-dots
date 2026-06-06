@@ -1,0 +1,9 @@
+[Unit]
+Description=Rotate wallpaper to a random one
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypr/scripts/wallpaper.sh
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-1
+Environment=XDG_RUNTIME_DIR=%t

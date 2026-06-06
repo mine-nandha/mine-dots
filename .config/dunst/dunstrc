@@ -1,0 +1,74 @@
+[global]
+    monitor = 0
+    follow = mouse
+    width = 300
+    height = 300
+    origin = top-right
+    offset = 12x48
+    scale = 0
+
+    notification_limit = 5
+
+    progress_bar = true
+    progress_bar_height = 6
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+
+    corner_radius = 8
+    rounded_large = false
+
+    background = "#060303"
+    foreground = "#e4cac0"
+    timeout = 5
+    padding = 12
+    horizontal_padding = 16
+    text_icon_padding = 8
+    frame_width = 1
+    frame_color = "#060303"
+    separator_color = "#9f8d86"
+
+    sort = yes
+    indicate_hidden = yes
+    idle_threshold = 120
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = true
+
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 48
+    icon_path = /usr/share/icons/hicolor/48x48/apps/
+
+    sticky_history = yes
+    history_length = 20
+    dmenu = /usr/bin/fuzzel --dmenu
+
+    font = JetBrainsMono Nerd Font 11
+    line_height = 0
+    markup = full
+    format = "<b>%s</b>\n%b"
+    vertical_alignment = center
+
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    history = ctrl+grave
+    context = ctrl+shift+period
+
+[urgency_low]
+    background = "#060303"
+    foreground = "#e4cac0"
+    timeout = 5
+    frame_color = "#9f8d86"
+
+[urgency_normal]
+    background = "#060303"
+    foreground = "#e4cac0"
+    timeout = 5
+    frame_color = "#A19370"
+
+[urgency_critical]
+    background = "#060303"
+    foreground = "#8D7F7E"
+    timeout = 0
+    frame_color = "#8D7F7E"

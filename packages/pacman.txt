@@ -32,3 +32,4 @@ noto-fonts-emoji
 jq
 zed
 gnome-keyring
+python-pywal
