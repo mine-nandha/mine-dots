@@ -5,3 +5,6 @@
 *~
 .DS_Store
 .config/waybar/colors.css
+.config/dunst/sed*
+.config/systemd/user/*.wants/
+.config/systemd/user/pipewire-session-manager.service
