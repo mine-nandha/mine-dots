@@ -29,7 +29,12 @@ local browser     = "google-chrome-stable"
 ------------------
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar & hyprpaper & dunst & hyprpolkitagent & blueman-applet & hypridle")
+    hl.exec_cmd("waybar")
+    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("dunst")
+    hl.exec_cmd("hyprpolkitagent")
+    hl.exec_cmd("blueman-applet")
+    hl.exec_cmd("hypridle")
     hl.exec_cmd("sleep 0.5 && dunstctl set-paused false")
     hl.exec_cmd("sleep 1 && /home/nandha/.config/hypr/scripts/wallpaper.sh --restore")
 
