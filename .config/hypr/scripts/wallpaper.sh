@@ -48,8 +48,6 @@ set_wallpaper() {
 
     echo "$img" > "$STATE_FILE"
     echo "$img" > "$CURRENT_WAL_FILE"
-
-    dunstify -i "$img" "Wallpaper" "$(basename "$img")" -t 2000 2>/dev/null
 }
 
 # Determine wallpaper source

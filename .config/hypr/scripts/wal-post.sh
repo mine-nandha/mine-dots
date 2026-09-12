@@ -48,5 +48,8 @@ if [ -f "$HYPRLOCK" ] && [ -n "$WALLPAPER" ] && [ -f "$WALLPAPER" ]; then
 fi
 
 # Reload daemons
-killall -SIGUSR2 waybar 2>/dev/null || true
+pkill -SIGTERM waybar 2>/dev/null || true
+sleep 0.5
+waybar &
+disown
 dunstctl reload 2>/dev/null || true
