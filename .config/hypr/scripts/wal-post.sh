@@ -48,6 +48,8 @@ if [ -f "$HYPRLOCK" ] && [ -n "$WALLPAPER" ] && [ -f "$WALLPAPER" ]; then
 fi
 
 # Reload daemons
+# wallpaper-rotation.service runs this in its own cgroup; KillMode=process on that
+# unit is what lets this backgrounded waybar outlive the oneshot service.
 pkill -SIGTERM waybar 2>/dev/null || true
 sleep 0.5
 waybar &

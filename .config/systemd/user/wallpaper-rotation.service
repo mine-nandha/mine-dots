@@ -4,6 +4,9 @@ After=graphical-session.target
 
 [Service]
 Type=oneshot
+# Only track the main process; let the backgrounded waybar (restarted by
+# wal-post.sh) outlive this oneshot unit instead of reaping it from the cgroup.
+KillMode=process
 ExecStartPre=/bin/sleep 3
 ExecStart=%h/.config/hypr/scripts/wallpaper.sh
 Environment=DISPLAY=:0
