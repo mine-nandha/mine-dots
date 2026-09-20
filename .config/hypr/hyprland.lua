@@ -30,7 +30,8 @@ local browser     = "google-chrome-stable"
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
-    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("awww-daemon")
+    hl.exec_cmd("python3 /home/nandha/.config/hypr/scripts/mpvpaper-stop-ipc.py")
     hl.exec_cmd("dunst")
     hl.exec_cmd("hyprpolkitagent")
     hl.exec_cmd("blueman-applet")

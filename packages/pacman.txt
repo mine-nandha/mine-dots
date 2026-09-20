@@ -3,6 +3,8 @@ hyprlock
 hypridle
 hyprsunset
 hyprpaper
+awww
+mpvpaper
 hyprpolkitagent
 xdg-desktop-portal-hyprland
 waybar
