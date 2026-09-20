@@ -54,7 +54,6 @@ button {
 #memory,
 #wireplumber,
 #network,
-#custom-updates,
 #battery,
 #mpris,
 #idle_inhibitor,
@@ -136,8 +135,7 @@ button {
 #cpu,
 #memory,
 #wireplumber,
-#network,
-#custom-updates {
+#network {
   color: @foreground;
 }
 
@@ -145,7 +143,6 @@ button {
 #memory:hover,
 #wireplumber:hover,
 #network:hover,
-#custom-updates:hover,
 #battery:hover,
 #idle_inhibitor:hover,
 #custom-power-profile:hover {
@@ -159,10 +156,6 @@ button {
 
 #network.disconnected {
   color: @crit;
-}
-
-#custom-updates.has-updates {
-  color: @warn;
 }
 
 #battery {

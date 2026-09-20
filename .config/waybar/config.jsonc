@@ -8,7 +8,6 @@
   "modules-left": ["group/hardware", "hyprland/workspaces"],
   "modules-center": ["mpris"],
   "modules-right": [
-    "custom/updates",
     "network",
     "wireplumber",
     "battery",
@@ -151,13 +150,6 @@
     "format": "",
     "on-click": "systemctl poweroff",
     "tooltip": "Shutdown"
-  },
-
-  "custom/updates": {
-    "exec": "~/.config/waybar/scripts/custom_modules.sh updates",
-    "return-type": "json",
-    "interval": 3600,
-    "on-click": "kitty -e sh -c 'checkupdates; read -p \"Press enter to close\"'"
   },
 
   "mpris": {
