@@ -130,6 +130,10 @@ set_wallpaper() {
         apply_swww "$img"
     fi
 
+    # Ask the pause daemon to let the new wallpaper show itself for a short
+    # repaint grace window even while a window is focused, then re-freeze it.
+    touch "$HOME/.cache/wallpaper_repaint"
+
     echo "$poster" > "$STATE_FILE"
     echo "$poster" > "$CURRENT_WAL_FILE"
 

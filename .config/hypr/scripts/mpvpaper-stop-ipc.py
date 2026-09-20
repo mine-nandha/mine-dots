@@ -7,12 +7,18 @@ Mirrors the behavior of pvtoari/mpvpaper-stop. No extra dependencies.
 - Videos (mpvpaper): sends "set_property pause true/false" to every
   /tmp/mpvpaper-<monitor>.sock IPC socket.
 - Animated GIFs (awww): runs `awww pause` / `awww unpause`.
-- A 3-second tick re-pushes the current state to any newly-appeared mpvpaper
-  socket, so a video launches with the correct pause state immediately.
+- A 1-second periodic schedule (driven by select() polling, independent of
+  socket traffic) re-pushes the current state to any newly-appeared mpvpaper
+  socket and checks the repaint marker, so a video launches paused and a
+  wallpaper switch is honored even while activewindow events keep flowing.
+- A repaint grace window: when wallpaper.sh leaves a fresh repaint marker, the
+  daemon forces the new wallpaper to show itself (unpauses) for ~2.5s even
+  while a window is focused, then re-freezes it. See REPAINT_MARKER.
 """
 
 import json
 import os
+import select
 import socket
 import subprocess
 import sys
@@ -20,6 +26,10 @@ import time
 
 MPV_SOCKET_DIR = os.environ.get("MPV_SOCKET_DIR", "/tmp")
 TICK = 3
+REPAINT_GRACE = 2.5
+REPAINT_MARKER = os.environ.get(
+    "REPAINT_MARKER", os.path.expanduser("~/.cache/wallpaper_repaint")
+)
 
 def hypr_socket_path():
     runtime = os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}")
@@ -100,6 +110,51 @@ def resync():
             send_pause_socket(spath, state)
         known = current
 
+repaint_until = None  # module-level: timestamp until which we force-unpause
+
+def repaint_tick():
+    """Open a short grace window after a wallpaper switch so the new wallpaper
+    becomes visible even while a window is focused; afterwards fold back into
+    the real focus state (re-freeze). Trigger: wallpaper.sh touching the repaint
+    marker file. Covers both mpvpaper videos and awww GIFs."""
+    global state, repaint_until
+    now = time.time()
+    mt = repaint_pending()
+    if mt is not None:
+        if now - mt < REPAINT_GRACE + TICK:
+            repaint_until = now + REPAINT_GRACE
+        repaint_remove()
+    if repaint_until is None:
+        return
+    if now < repaint_until:
+        if state is not False:
+            state = False
+            set_pause(False)
+            awww_pause(False)
+        return
+    # Grace expired: fold back into the real focus state.
+    repaint_until = None
+    focused = probe_current_focus()
+    if focused is not None:
+        paused = bool(focused)
+        if paused != state:
+            state = paused
+            set_pause(paused)
+            awww_pause(paused)
+
+def repaint_pending():
+    """mtime (float) of the repaint request marker, or None when absent."""
+    try:
+        return os.path.getmtime(REPAINT_MARKER)
+    except (OSError, ValueError):
+        return None
+
+def repaint_remove():
+    try:
+        os.remove(REPAINT_MARKER)
+    except OSError:
+        pass
+
 def probe_current_focus():
     """Best-effort initial pause state from hyprctl. Returns None if unusable."""
     try:
@@ -125,17 +180,32 @@ def main():
         sock = None
         try:
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-            sock.settimeout(TICK)
             sock.connect(path)
+            sock.setblocking(False)
             buf = b""
+            last_tick = 0.0
             while True:
-                data = sock.recv(65536)
+                # Periodic work runs on a monotonic schedule, independent of
+                # socket traffic: repaint markers and new mpvpaper sockets are
+                # handled even while activewindow events keep flowing.
+                now = time.monotonic()
+                if now - last_tick >= 1.0:
+                    last_tick = now
+                    resync()
+                    repaint_tick()
+                ready, _, _ = select.select([sock], [], [], 0.5)
+                if not ready:
+                    continue
+                try:
+                    data = sock.recv(65536)
+                except (BlockingIOError, InterruptedError):
+                    continue
+                if not data:
+                    break  # peer closed; reconnect
                 buf += data
                 while b"\n" in buf:
                     line, buf = buf.split(b"\n", 1)
                     handle_event(line.decode(errors="replace"))
-        except socket.timeout:
-            pass  # tick — falls through to resync below
         except OSError as exc:
             print(f"mpvpaper-stop-ipc: connection error ({exc}); retrying in 2s", file=sys.stderr)
             time.sleep(2)
@@ -145,7 +215,6 @@ def main():
                     sock.close()
                 except OSError:
                     pass
-        resync()
 
 if __name__ == "__main__":
     main()
