@@ -1,7 +1,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 30,
+  "height": 34,
   "margin-top": 6,
   "margin-left": 6,
   "margin-right": 6,
@@ -21,12 +21,21 @@
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": false,
+    "sort-by-number": true,
     "format": "{icon}",
     "on-click": "hyprctl dispatch workspace {id}",
     "format-icons": {
-      "active": "●",
-      "urgent": "",
-      "default": "○"
+      "default": "\u25CB",
+      "urgent": "\u26A0",
+      "kitty": "\uF120",
+      "firefox": "\uF269",
+      "google-chrome": "\uF268",
+      "google-chrome-stable": "\uF268",
+      "chromium": "\uF268",
+      "dev.zed.Zed": "\uF121",
+      "code": "\uF121",
+      "dolphin": "\uF07C",
+      "org.kde.dolphin": "\uF07C"
     },
     "persistent-workspaces": {
       "*": 5

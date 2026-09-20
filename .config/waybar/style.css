@@ -1,60 +1,52 @@
 @import url("colors.css");
 
+/* ============================================================
+   Floating Glass Terminal — pywal-driven, app-aware status bar
+   Surfaces re-theme with the wallpaper (colors.css); alert
+   colors stay semantic and legible on any palette.
+   ============================================================ */
+
 * {
   border: none;
   border-radius: 0;
   font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   min-height: 0;
 }
 
+@define-color accent @color6;      /* dynamic, from wallpaper */
+@define-color on-accent @background;
+@define-color warn #f9c74f;        /* amber — semantic, fixed */
+@define-color crit #f38ba8;        /* red   — semantic, fixed */
+
 window#waybar {
-  background: alpha(@background, 0.85);
+  background: transparent;
   color: @foreground;
-  transition: background-color 0.2s;
 }
 
 window#waybar.hidden { opacity: 0.2; }
 
+/* ---------- floating glass clusters ---------- */
+
 .modules-left,
 .modules-center,
 .modules-right {
-  padding: 0 4px;
+  margin: 0 6px;
+  padding: 2px 8px;
+  background: alpha(@background, 0.62);
+  border: 1px solid alpha(@color8, 0.30);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
 }
+
+/* ---------- base module chrome ---------- */
 
 button {
   box-shadow: none;
   text-shadow: none;
   background: transparent;
   border: none;
-  border-radius: 0;
-}
-
-button:hover {
-  background: alpha(@foreground, 0.08);
-  transition: background 0.15s;
-}
-
-#workspaces {
-  margin: 0 4px;
-}
-
-#workspaces button {
-  padding: 0 8px;
-  color: @color8;
-  font-size: 12px;
-}
-
-#workspaces button.active {
-  color: @foreground;
-  background: alpha(@color4, 0.15);
-  border-radius: 6px;
-}
-
-#workspaces button.urgent {
-  color: @color1;
-  background: alpha(@color1, 0.15);
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 #clock,
@@ -65,104 +57,170 @@ button:hover {
 #custom-updates,
 #battery,
 #mpris,
-#group-hardware,
 #idle_inhibitor,
 #custom-power-profile,
+#group-hardware,
 #group-power {
-  padding: 0 10px;
+  padding: 0 7px;
+  margin: 0 1px;
+  border-radius: 8px;
+}
+
+/* whisper dividers around the grouped chips */
+#group-hardware {
+  margin-right: 4px;
+  padding-right: 8px;
+  border-right: 1px solid alpha(@color8, 0.25);
+}
+
+#group-power {
+  margin-left: 4px;
+  padding-left: 8px;
+  border-left: 1px solid alpha(@color8, 0.25);
+}
+
+/* ---------- workspaces (app-aware) ---------- */
+
+#workspaces {
   margin: 0 2px;
-  border-radius: 6px;
 }
 
-#clock {
-  color: #fab387;
+#workspaces button {
+  padding: 0 8px;
+  margin: 1px 2px;
+  color: @foreground;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
-#cpu {
-  color: @color4;
+#workspaces button.empty {
+  color: alpha(@foreground, 0.28);
+  font-size: 12px;
 }
 
-#memory {
-  color: @color2;
-}
-
-#wireplumber {
+#workspaces button:hover {
+  background: alpha(@accent, 0.18);
   color: @foreground;
 }
 
-#wireplumber.muted {
-  color: @color1;
+#workspaces button.focused {
+  box-shadow: inset 0 -2px 0 alpha(@accent, 0.9);
 }
 
-#network {
-  color: @color6;
+#workspaces button.active {
+  color: @on-accent;
+  background: linear-gradient(135deg, alpha(@color4, 0.95), alpha(@color6, 0.95));
+  box-shadow: 0 1px 8px alpha(@color6, 0.35);
+}
+
+#workspaces button.urgent {
+  color: @crit;
+  background: alpha(@crit, 0.15);
+}
+
+/* ---------- modules ---------- */
+
+#clock {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: @foreground;
+}
+
+#clock:hover {
+  color: @accent;
+  background: alpha(@foreground, 0.08);
+}
+
+#cpu,
+#memory,
+#wireplumber,
+#network,
+#custom-updates {
+  color: @foreground;
+}
+
+#cpu:hover,
+#memory:hover,
+#wireplumber:hover,
+#network:hover,
+#custom-updates:hover,
+#battery:hover,
+#idle_inhibitor:hover,
+#custom-power-profile:hover {
+  background: alpha(@foreground, 0.08);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#wireplumber.muted {
+  color: alpha(@foreground, 0.45);
 }
 
 #network.disconnected {
-  color: @color1;
-}
-
-#custom-updates {
-  color: @color5;
+  color: @crit;
 }
 
 #custom-updates.has-updates {
-  color: @color3;
+  color: @warn;
 }
 
 #battery {
-  color: @color2;
-}
-
-#battery.critical {
-  color: @color1;
-  background: alpha(@color1, 0.15);
-}
-
-#battery.warning {
-  color: @color3;
+  color: @foreground;
 }
 
 #battery.charging {
-  color: @color6;
+  color: @accent;
 }
 
+#battery.warning {
+  color: @warn;
+}
+
+#battery.critical {
+  color: @crit;
+  background: alpha(@crit, 0.15);
+}
+
+#idle_inhibitor {
+  color: alpha(@foreground, 0.45);
+}
+
+#idle_inhibitor.activated {
+  color: @accent;
+}
+
+#custom-power-profile.performance {
+  color: @warn;
+}
+
+#custom-power-profile.balanced {
+  color: @accent;
+}
+
+#custom-power-profile.power-saver {
+  color: alpha(@foreground, 0.6);
+}
+
+/* ---------- media ---------- */
+
 #mpris {
-  color: #6c7086;
+  color: alpha(@foreground, 0.8);
   min-width: 100px;
 }
 
 #mpris.paused {
-  color: #6c7086;
+  color: alpha(@foreground, 0.5);
   font-style: italic;
 }
 
-#group-hardware {
-  padding: 0 6px;
-}
+/* ---------- power drawer ---------- */
 
-#idle_inhibitor {
-  color: @color8;
-}
-
-#idle_inhibitor.activated {
-  color: @color3;
-}
-
-#custom-power-profile.performance {
-  color: @color1;
-}
-
-#custom-power-profile.balanced {
-  color: @color3;
-}
-
-#custom-power-profile.power-saver {
-  color: @color2;
-}
-
-#group-power {
-  padding: 0 6px;
+.drawer {
+  background: alpha(@background, 0.92);
+  border: 1px solid alpha(@color8, 0.35);
+  border-radius: 12px;
+  margin: 2px;
 }
 
 #custom-power,
@@ -180,20 +238,25 @@ button:hover {
 #custom-reboot:hover,
 #custom-shutdown:hover {
   background: alpha(@foreground, 0.1);
-  border-radius: 6px;
+  border-radius: 8px;
+  color: @accent;
 }
 
 #custom-shutdown:hover {
-  color: @color1;
+  color: @crit;
 }
 
+/* ---------- tooltip ---------- */
+
 tooltip {
-  background: alpha(@background, 0.95);
-  border: 1px solid #45475a;
-  border-radius: 8px;
+  background: alpha(@background, 0.97);
+  border: 1px solid alpha(@color6, 0.35);
+  border-radius: 10px;
   padding: 8px 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 tooltip label {
   color: @foreground;
+  font-size: 12px;
 }
