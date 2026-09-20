@@ -39,6 +39,16 @@ window#waybar.hidden { opacity: 0.2; }
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
 }
 
+/* center holds only mpris — its pill lives on #mpris.playing/.paused so an
+   idle (no player) mpris leaves NO orphan sliver in the middle of the bar */
+.modules-center {
+  margin: 0 6px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 /* ---------- base module chrome ---------- */
 
 button {
@@ -248,6 +258,23 @@ button {
 
 #mpris {
   color: alpha(@foreground, 0.8);
+  /* idle (no active player): fully invisible */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+#mpris.playing,
+#mpris.paused {
+  background: alpha(@background, 0.62);
+  border: 1px solid alpha(@color8, 0.30);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
+  padding: 0 14px;
+  margin: 2px 0;
   min-width: 100px;
 }
 
