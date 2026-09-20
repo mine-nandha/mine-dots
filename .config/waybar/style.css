@@ -52,7 +52,7 @@ button {
 #clock,
 #cpu,
 #memory,
-#wireplumber,
+#custom-volume,
 #network,
 #bluetooth,
 #battery,
@@ -77,6 +77,30 @@ button {
   margin-left: 2px;
   padding-left: 4px;
 }
+
+/* compact status chips — hover hugs the glyph, not the bar height */
+#network,
+#bluetooth,
+#custom-volume,
+#battery,
+#custom-power-profile,
+#idle_inhibitor,
+#group-power {
+  margin: 6px 1px;
+  padding: 0 8px;
+  border-radius: 8px;
+}
+
+/* Optical compensation: nerd-font icon glyphs carry ink offset inside their
+   advance cell (measured: network +1.7px, volume +1.2, idle +0.9, profile +0.7
+   right; bluetooth -1.0, battery -0.6 left). Per-chip pad pairs recenter ink,
+   keeping every pill at the same 29px width. */
+#network { padding: 0 9px 0 6px; }
+#custom-volume { padding: 0 9px 0 7px; }
+#custom-power-profile { padding: 0 9px 0 7px; }
+#idle_inhibitor { padding: 0 9px 0 7px; }
+#bluetooth { padding: 0 7px 0 9px; }
+#battery { padding: 0 7px 0 9px; }
 
 /* ---------- workspaces (app-aware) ---------- */
 
@@ -133,7 +157,6 @@ button {
 
 #clock:hover {
   color: @accent;
-  background: alpha(@foreground, 0.08);
 }
 
 #cpu,
@@ -145,7 +168,7 @@ button {
 
 #cpu:hover,
 #memory:hover,
-#wireplumber:hover,
+#custom-volume:hover,
 #network:hover,
 #bluetooth:hover,
 #battery:hover,
@@ -155,7 +178,7 @@ button {
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-#wireplumber.muted {
+#custom-volume.muted {
   color: alpha(@foreground, 0.45);
 }
 
@@ -167,6 +190,7 @@ button {
 
 #bluetooth {
   color: @foreground;
+  font-size: 14px;
 }
 
 #bluetooth.disabled,

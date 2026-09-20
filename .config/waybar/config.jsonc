@@ -10,7 +10,7 @@
   "modules-right": [
     "network",
     "bluetooth",
-    "wireplumber",
+    "custom/volume",
     "battery",
     "custom/power-profile",
     "idle_inhibitor",
@@ -59,16 +59,14 @@
     "max-length": 10
   },
 
-  "wireplumber": {
-    "format": "{icon}",
-    "format-muted": "",
-    "format-icons": ["", ""],
-    "tooltip-format": "{volume}%",
-    "tooltip-format-muted": "Muted",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-",
-    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+",
-    "scroll-step": 1
+  "custom/volume": {
+    "exec": "~/.config/waybar/scripts/volume_popup.sh",
+    "return-type": "json",
+    "interval": 1,
+    "signal": 10,
+    "on-click": "~/.config/waybar/scripts/volume_action.sh mute",
+    "on-scroll-up": "~/.config/waybar/scripts/volume_action.sh up",
+    "on-scroll-down": "~/.config/waybar/scripts/volume_action.sh down"
   },
 
   "network": {
@@ -94,7 +92,7 @@
     "tooltip-format-connected": "{device_alias} · {device_battery_percentage}%",
     "tooltip-format-disabled": "Bluetooth off",
     "interval": 30,
-    "on-click": "kitty -e bluetoothctl"
+    "on-click": "blueman-manager"
   },
 
   "battery": {
@@ -193,8 +191,8 @@
   },
 
   "clock": {
-    "format": "{:%H:%M}",
-    "format-alt": "{:%a, %b %d}",
+    "format": "<span weight=\"bold\">{0:%H:%M}</span>\n<span alpha=\"70%\">{0:%d/%m}</span>",
+    "tooltip-format": "{:%A, %d %B %Y — %H:%M}",
     "interval": 30
   },
 
