@@ -9,6 +9,7 @@
   "modules-center": ["mpris"],
   "modules-right": [
     "network",
+    "bluetooth",
     "wireplumber",
     "battery",
     "custom/power-profile",
@@ -59,9 +60,11 @@
   },
 
   "wireplumber": {
-    "format": "{volume}% {icon}",
-    "format-muted": " MUTED",
+    "format": "{icon}",
+    "format-muted": "",
     "format-icons": ["", ""],
+    "tooltip-format": "{volume}%",
+    "tooltip-format-muted": "Muted",
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+",
@@ -70,21 +73,38 @@
 
   "network": {
     "interval": 30,
-    "format-wifi": "{essid} {icon}",
-    "format-ethernet": "{ifname} ",
-    "format-disconnected": "睊 Disconnected",
+    "format-wifi": "{icon}",
+    "format-ethernet": "",
+    "format-disconnected": "睊",
     "format-icons": [""],
     "tooltip-format": "{essid} ({signalStrength}%)",
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "kitty nmtui"
   },
 
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "",
+    "format-off": "",
+    "format-on": "",
+    "format-connected": "",
+    "format-pairable": "",
+    "format-paired": "",
+    "tooltip-format": "{num_connections} connected",
+    "tooltip-format-connected": "{device_alias} · {device_battery_percentage}%",
+    "tooltip-format-disabled": "Bluetooth off",
+    "interval": 30,
+    "on-click": "kitty -e bluetoothctl"
+  },
+
   "battery": {
     "interval": 60,
-    "format": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
+    "format": "{icon}",
+    "format-charging": "",
     "format-icons": ["", "", "", "", ""],
     "format-time": "{H}h{M}m",
+    "tooltip-format": "{capacity}% {time}",
+    "tooltip-format-charging": "Charging · {capacity}% {time}",
     "states": {
       "warning": 30,
       "critical": 15

@@ -54,6 +54,7 @@ button {
 #memory,
 #wireplumber,
 #network,
+#bluetooth,
 #battery,
 #mpris,
 #idle_inhibitor,
@@ -73,9 +74,8 @@ button {
 }
 
 #group-power {
-  margin-left: 4px;
-  padding-left: 8px;
-  border-left: 1px solid alpha(@color8, 0.25);
+  margin-left: 2px;
+  padding-left: 4px;
 }
 
 /* ---------- workspaces (app-aware) ---------- */
@@ -125,6 +125,10 @@ button {
   font-size: 13px;
   letter-spacing: 0.5px;
   color: @foreground;
+  margin: 0 3px;
+  padding: 0 13px;
+  border-left: 1px solid alpha(@color8, 0.30);
+  border-right: 1px solid alpha(@color8, 0.30);
 }
 
 #clock:hover {
@@ -143,6 +147,7 @@ button {
 #memory:hover,
 #wireplumber:hover,
 #network:hover,
+#bluetooth:hover,
 #battery:hover,
 #idle_inhibitor:hover,
 #custom-power-profile:hover {
@@ -156,6 +161,26 @@ button {
 
 #network.disconnected {
   color: @crit;
+}
+
+/* ---------- bluetooth chip states ---------- */
+
+#bluetooth {
+  color: @foreground;
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+  color: alpha(@foreground, 0.35);
+}
+
+#bluetooth.on {
+  color: alpha(@foreground, 0.70);
+}
+
+#bluetooth.connected,
+#bluetooth.paired {
+  color: @accent;
 }
 
 #battery {
